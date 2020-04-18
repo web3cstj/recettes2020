@@ -14,9 +14,10 @@ class RecetteController extends Controller
      */
     public function index()
     {
-        for ($i = 0; $i < 10; $i += 1) {
-            $recettes[] = Recette::fake();
-        }
+        // for ($i = 0; $i < 10; $i += 1) {
+        //     $recettes[] = Recette::fake();
+        // }
+        $recettes = Recette::all();
         return view("recette.index", ['recettes' => $recettes]);
     }
 
@@ -48,7 +49,9 @@ class RecetteController extends Controller
      */
     public function show(Recette $recette)
     {
-        $recette = Recette::fake();
+        // $recette = Recette::fake();
+        // $recette = Recette::find($id);
+        // dd($recette);
         $recette->ingredients = json_decode($recette->ingredients);
         $recette->instructions = json_decode($recette->instructions);
         return view("recette.show", ['recette' => $recette]);

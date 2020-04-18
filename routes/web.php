@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', "AppController@index");
+Route::get('/installer', "AppController@installer");
 Route::get('/recettes', "RecetteController@index");
-Route::get('/recettes/{id}', "RecetteController@show");
+Route::get('/recettes/{recette}', "RecetteController@show")->where(["recette", '[0-9]+']);
 Route::get('/categories', "CategorieController@index");

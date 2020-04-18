@@ -12,13 +12,14 @@ class Recette extends Model
         $resultat->id = $f->randomNumber(5);
         $resultat->titre = $f->realText(30);
         $resultat->intro = $f->realText(120);
-        $resultat->noImage = $f->numberBetween(0, 1000);
+        $resultat->noImage = $f->numberBetween(0, 900);
         // $resultat->image = "https://i.picsum.photos/id/{$noImage}/400/284.jpg";
         $resultat->legende = $f->realText(60);
         $resultat->description = $f->realText(300);
         $ingredients = [];
         $nbIngredients = rand(5,15);
         for($i = 0; $i < $nbIngredients; $i += 1) {
+            $ingr = [];
             $ingr['quantite'] = rand(1, 10)/4;
             $ingr['unite'] = $f->randomElement(["c. à thé", "c. à soupe", "tasses"]);
             $ingr['ingredient'] = $f->catchPhrase();

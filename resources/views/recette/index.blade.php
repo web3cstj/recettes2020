@@ -11,4 +11,4 @@
     @endforeach
     </ul>
 </article>
-@sectionend
+@endsection
