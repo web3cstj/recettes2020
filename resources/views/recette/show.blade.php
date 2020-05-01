@@ -11,15 +11,17 @@
     {{$recette->description}}
 	<h2>Ingrédients</h2>
 	<ul class="ingredients">
-    @foreach($recette->ingredients as $ing)
+    @foreach($recette->ingredientsArray as $ing)
         <li><span class="quantite">{{$ing->quantite}}</span><span class="unite">{{$ing->unite}}</span><span class="ingredient">{{$ing->ingredient}}</span></li>
     @endforeach
 	</ul>
 	<h2>Instructions</h2>
 	<ol class="instructions">
-    @foreach($recette->instructions as $instr)
+    @foreach($recette->instructionsArray as $instr)
         <li>{{$instr}}</li>
     @endforeach
     </ol>
+    <div><a href="{{action('RecetteController@edit', $recette)}}">Modifier la recette</a></div>
+    <div><a href="{{action('RecetteController@delete', $recette)}}">Supprimer la recette</a></div>
 </article>
 @endsection

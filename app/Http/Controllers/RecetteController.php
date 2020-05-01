@@ -28,7 +28,9 @@ class RecetteController extends Controller
      */
     public function create()
     {
-        //
+        // $recette = new Recette();
+        $recette = Recette::fake(); // Pour les paresseux
+        return view("recette.create", ['recette' => $recette]);
     }
 
     /**
@@ -39,6 +41,16 @@ class RecetteController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->has('annuler')) {
+            return redirect()->action("RecetteController@index");
+        }
+        $recette = new Recette();
+        $donnees = $request->all();
+        // $donnees->ingredients = $this->ingredients;
+        // $donnees->instructions = $this->instructions;
+        $recette->fill($donnees);
+        $recette->save();
+        return redirect()->action("RecetteController@show", $recette);
     }
 
     /**
@@ -52,8 +64,8 @@ class RecetteController extends Controller
         // $recette = Recette::fake();
         // $recette = Recette::find($id);
         // dd($recette);
-        $recette->ingredients = json_decode($recette->ingredients);
-        $recette->instructions = json_decode($recette->instructions);
+        // $recette->ingredients = json_decode($recette->ingredients);
+        // $recette->instructions = json_decode($recette->instructions);
         return view("recette.show", ['recette' => $recette]);
         //
     }
@@ -66,7 +78,7 @@ class RecetteController extends Controller
      */
     public function edit(Recette $recette)
     {
-        //
+        return view("recette.edit", ['recette' => $recette]);
     }
 
     /**
@@ -78,7 +90,13 @@ class RecetteController extends Controller
      */
     public function update(Request $request, Recette $recette)
     {
-        //
+        if ($request->has('annuler')) {
+            return redirect()->action("RecetteController@show", $recette);
+        }
+        $donnees = $request->all();
+        $recette->fill($donnees);
+        $recette->save();
+        return redirect()->action("RecetteController@show", $recette);
     }
 
     /**
@@ -87,8 +105,22 @@ class RecetteController extends Controller
      * @param  \App\Recette  $recette
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recette $recette)
+    public function delete(Recette $recette)
     {
-        //
+        return view("recette.delete", ['recette' => $recette]);
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Recette  $recette
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, Recette $recette)
+    {
+        if ($request->has('annuler')) {
+            return redirect()->action("RecetteController@show", $recette);
+        }
+        $recette->delete();
+        return redirect()->action("RecetteController@index");
     }
 }
