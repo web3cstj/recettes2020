@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', "AppController@index");
 Route::get('/installer', "AppController@installer");
-Route::get('/recettes', "RecetteController@index");
-Route::get('/recettes/{recette}', "RecetteController@show")->where(["recette", '[0-9]+']);
-Route::get('/categories', "CategorieController@index");
+Route::group(['prefix'=>'recettes', 'where'=>['recette', '[0-9]+']], function() {
+    Route::get('/', "RecetteController@index");
+    Route::get('/create', "RecetteController@create");
+    Route::post('/create', "RecetteController@store");
+    Route::get('/{recette}', "RecetteController@show");
+    Route::get('/{recette}/edit', "RecetteController@edit");
+    Route::post('/{recette}/edit', "RecetteController@update");
+    Route::get('/{recette}/delete', "RecetteController@delete");
+    Route::post('/{recette}/delete', "RecetteController@destroy");
+});

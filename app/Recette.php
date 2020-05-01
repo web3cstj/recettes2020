@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recette extends Model
 {
+    protected $fillable = [
+        "id",
+        "titre",
+        "intro",
+        "noImage",
+        "legende",
+        "description",
+        "ingredientsString",
+        "instructionsString",
+    ];
+
     static public function fake() {
         $f = \Faker\Factory::create("fr_CA");
         $resultat = new self();
@@ -33,5 +44,48 @@ class Recette extends Model
         }
         $resultat->instructions = \json_encode($instructions);
         return $resultat;
+    }
+    public function getIngredientsArrayAttribute() {
+        return \json_decode($this->ingredients);
+    }
+    public function setIngredientsArrayAttribute($val) {
+        $this->ingredients = \json_encode($val);
+    }
+    public function getInstructionsArrayAttribute() {
+        return \json_decode($this->instructions);
+    }
+    public function setInstructionsArrayAttribute($val) {
+        $this->instructions = \json_encode($val);
+    }
+
+    public function getIngredientsStringAttribute() {
+        $resultat = [];
+        $ingredients = $this->getIngredientsArrayAttribute();
+        foreach($ingredients as $ingredient) {
+            $ingr = get_object_vars($ingredient);
+            $ingr = implode('|', $ingr);
+            $resultat[] = $ingr;
+        }
+        $resultat = implode("\r\n", $resultat);
+        return $resultat;
+    }
+    public function setIngredientsStringAttribute($val) {
+        $resultat = [];
+        $ingredients = explode("\r\n", $val);
+        foreach($ingredients as $ingredient) {
+            $ingredient = explode("|", $ingredient);
+            $ingredient = array_combine(['quantite', 'unite', 'ingredient'], $ingredient);
+            $resultat[] = $ingredient;
+        }
+        $this->setIngredientsArrayAttribute($resultat);
+    }
+    public function getInstructionsStringAttribute() {
+        $resultat = $this->getInstructionsArrayAttribute();
+        $resultat = implode("\r\n", $resultat);
+        return $resultat;
+    }
+    public function setInstructionsStringAttribute($val) {
+        $instructions = explode("\r\n", $val);
+        $this->setInstructionsArrayAttribute($instructions);
     }
 }
