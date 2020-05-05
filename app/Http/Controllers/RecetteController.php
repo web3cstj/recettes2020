@@ -44,6 +44,8 @@ class RecetteController extends Controller
         if ($request->has('annuler')) {
             return redirect()->action("RecetteController@index");
         }
+        $validatedData = $request->validate(Recette::$rules);
+
         $recette = new Recette();
         $donnees = $request->all();
         // $donnees->ingredients = $this->ingredients;

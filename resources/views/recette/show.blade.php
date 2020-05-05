@@ -5,7 +5,7 @@
 	<header>
 		<h1>{{$recette->titre}}</h1></header>
 	<p class="intro">{{$recette->intro}}</p>
-	<figure class="photoprincipale"><img src="https://picsum.photos/400/284" alt="{{$recette->legende}}" title="Le meilleur des sucres à la crème">
+	<figure class="photoprincipale"><img src="https://picsum.photos/id/{{$recette->noImage}}/400/284" alt="{{$recette->legende}}" title="Le meilleur des sucres à la crème">
 		<figcaption>{{$recette->legende}}</figcaption>
 	</figure>
     {{$recette->description}}

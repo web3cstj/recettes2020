@@ -17,6 +17,15 @@ class Recette extends Model
         "instructionsString",
     ];
 
+    static public $rules = [
+        "titre"=>"required|min:5|max:255",
+        "intro"=>"required|min:5|max:255",
+        "noImage"=>"required|integer",
+        "legende"=>"required|min:5|max:255",
+        "description"=>"required|min:5",
+        "ingredientsString"=>"required|min:5",
+        "instructionsString"=>"required|min:5",
+    ];
     static public function fake() {
         $f = \Faker\Factory::create("fr_CA");
         $resultat = new self();
