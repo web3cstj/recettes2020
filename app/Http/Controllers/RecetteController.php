@@ -95,6 +95,7 @@ class RecetteController extends Controller
         if ($request->has('annuler')) {
             return redirect()->action("RecetteController@show", $recette);
         }
+        $validatedData = $request->validate(Recette::$rules);
         $donnees = $request->all();
         $recette->fill($donnees);
         $recette->save();
