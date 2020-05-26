@@ -20,6 +20,11 @@ class RecetteController extends Controller
         $recettes = Recette::all();
         return view("recette.index", ['recettes' => $recettes]);
     }
+    public function adminindex()
+    {
+        $recettes = Recette::all();
+        return view("recette.adminindex", ['recettes' => $recettes]);
+    }
 
     /**
      * Show the form for creating a new resource.
